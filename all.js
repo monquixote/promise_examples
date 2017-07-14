@@ -39,9 +39,18 @@ function callbackCounter(limit,cb){
 fs.readdirAsync('.','utf8')
     .then((files)=>{
         return Promise.all(
-            files.map(file=>fs.readFileAsync(file+"hello","utf8")));
+            files.map(file=>fs.readFileAsync(file,"utf8")));
     })
     .then(concatAndWrite)
     .catch(console.log);
 
-   console.log("Hello");
+//Using Promise all
+async function usingAwait(fp){
+    const files = await fs.readdirAsync(fp,'utf8');
+    const content = await Promise.all(
+            files.map(file=>fs.readFileAsync(file,"utf8")));
+    concatAndWrite(content);
+}
+
+usingAwait('.')
+    .catch(console.log);

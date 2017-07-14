@@ -33,3 +33,18 @@ pfs.readFileAsync(firstFile,"utf8")
     .then(data=>Promise.all([pfs.readFileAsync(data[0],"utf8"),...data]))
     .then(data=>console.log(...data))
     .catch(console.log);
+
+//Using Async Await
+
+async function readFileAwait(fp) {
+    try {
+        const data1 = await pfs.readFileAsync(fp,"utf8");
+        const data2 = await pfs.readFileAsync(data1,"utf8");
+        const data3 = await pfs.readFileAsync(data2,"utf8");
+        console.log(data3,data2,data1);
+    }catch(e){
+        console.log(e);
+    }
+}
+
+readFileAwait(firstFile);
